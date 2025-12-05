@@ -1,0 +1,87 @@
+.nav-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-container > * {
+  flex: 0 1 auto;
+}
+
+#title {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  flex-grow: 1;
+
+  color: white;
+}
+
+#title p {
+  margin: 0;
+  color: rgb(189, 189, 189);
+
+  width: fit-content;
+  white-space: nowrap;
+}
+
+.title-paragraph {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 768px) {
+  #dropdownMenuButton {
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 576px) {
+  #dropdownMenuButton {
+    max-width: 200px;
+  }
+}
+
+#prefix-dropdown-container {
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1000;
+  position: relative;
+}
+
+#dropdownMenuButton {
+  max-width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-menu {
+  min-width: 250px;
+  max-width: 350px;
+  width: 100%;
+  background-color: rgb(60, 60, 60); 
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 4px 8px 0px, rgba(255, 255, 255, 0.19) 0px 6px 20px 0px;
+}
+
+/* Fix dropdown positioning */
+#prefix-dropdown-container .dropdown-menu {
+  right: 0;
+  left: auto !important;
+}
+
+.dropdown-item {
+  cursor: pointer;  
+  text-align: center; 
+  color: white;
+
+  padding: 7.5px;
+}
+
+.dropdown-item:hover {
+  background-color: rgb(33, 37, 41);
+  color: white;
+}

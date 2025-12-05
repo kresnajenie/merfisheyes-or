@@ -1,0 +1,14 @@
+
+.colorbar-green {
+    width: 30px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(0,255,0), rgb(61, 61, 61)); /* Gradient for coolwarm color map */
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.colorbar-label-green {
+    color: white;
+    font-size: 14px;
+    margin: 5px 0;
+}

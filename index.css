@@ -1,0 +1,128 @@
+body {
+    background-color: black !important;
+    margin: 0;
+    overflow: hidden;
+    font: 16px Arial;
+}
+
+canvas {
+    display: block;
+}
+
+nav {
+    background-color: #1b1b1b;
+}
+
+/* hides everything to prevent flickering */
+body * {
+    visibility: hidden;
+}
+
+a:link, a:visited {
+    color: white;
+    text-decoration: underline;
+}
+
+a:hover, a:focus, a:active {
+    color: gray;
+    text-decoration: underline;
+}
+footer {
+    position: absolute;
+    bottom: 0;    
+    z-index: 999;
+
+    opacity: 0.85;
+}
+
+footer p {
+    margin: 5px;
+
+    font-size: 13.5px;
+    color: white;
+}
+
+.showing-container {
+    position: fixed;
+    top: 70px;
+    right: 10px;
+
+    width: 300px;
+    /* z-index: 1000; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+}
+.colorbar-wrapper {
+    display: none;
+    position: fixed;
+    top: 120px;
+    right: 10px;
+    width: 50px;
+    text-align: center;
+}
+
+.colorbar {
+    width: 30px;
+    height: 100px;
+    background: linear-gradient(to bottom, #B40426, #FFFFFF, #3B4CC0); /* Gradient for coolwarm color map */
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.colorbar-label {
+    color: white;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.colorbar-wrapper2 {
+    display: none;
+    position: fixed;
+    top: 275px;
+    right: 10px;
+    width: 50px;
+    text-align: center;
+}
+
+.colorbar-wrapper3 {
+    display: none;
+    position: fixed;
+    top: 120px;
+    right: 10px;
+    width: 50px;
+    text-align: center;
+}
+
+
+
+.colorbar-green {
+    width: 30px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(0,255,0), rgb(61, 61, 61)); /* Gradient for coolwarm color map */
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.colorbar-label-green {
+    color: white;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.colorbar-magenta {
+    width: 30px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(255,0,255), rgb(61, 61, 61)); /* Gradient for coolwarm color map */
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.colorbar-label-magenta{
+    color: white;
+    font-size: 14px;
+    margin: 5px 0;
+}

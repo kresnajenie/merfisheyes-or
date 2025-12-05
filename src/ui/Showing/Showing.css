@@ -1,0 +1,135 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.showing-badge {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.showing-label {
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: bold;
+    display: none; /* Hide by default */
+}
+
+.showing-celltype {
+    background-color: #28a745; /* Green color (Success) */
+}
+
+.showing-gene {
+    background-color: #007bff; /* Blue color (Primary) */
+}
+
+.gene-badge {
+    background-color: #6c757d;
+    max-width: 100%;
+    width: max-content; /* Adjusts the width based on the content */
+    height: 35px;
+    text-overflow: clip;
+    overflow: hidden; /* Hides the scrollbar */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.celltype-badges {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-right: 5px;
+
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    width: 30vw;
+    /* max-height: 250px; */
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    scrollbar-color: dark;
+}
+
+.celltype-label {
+    position: relative;
+    padding: 5px 10px;
+    margin: 0;
+    border-radius: 10px;
+    font-size: small;
+    font-weight: bold;
+    color: black;
+    max-width: 100%;
+    width: max-content; /* Adjusts the width based on the content */
+    height: max-content;
+    text-overflow: clip;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.celltype-text {
+    text-wrap: pretty;
+    text-align: left;
+    margin: 0;
+    flex-basis: 0.7;
+    padding-right: 5px;
+}
+
+.delete {
+    display: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    text-align: center;
+    position: relative;
+    margin: 0 0 0 5px;
+    border-radius: 50%;
+    color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.delete:hover {
+    color: white;
+    background-color: #ff3b30;
+    transform: scale(1.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.celltype-label:hover .delete {
+    display: block;
+}
+
+.gene-badge::-webkit-scrollbar, .celltype-label::-webkit-scrollbar {
+    width: 5px;
+}
+
+.gene-badge::-webkit-scrollbar {
+    height: 5px;
+}
+
+.gene-badge::-webkit-scrollbar-thumb, .celltype-label::-webkit-scrollbar-thumb {
+    background-color: rgb(65, 65, 65);
+    border-radius: 20px;
+}
