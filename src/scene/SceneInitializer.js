@@ -14,6 +14,7 @@ import { map, distinctUntilChanged } from "rxjs/operators";
 import {
   ButtonState,
   updateGeneExpressionRange,
+  updateCurrentGeneValue2,
 } from "../states/ButtonState.js";
 import { loading } from "../helpers/Loading.js";
 import {
@@ -290,6 +291,13 @@ export class SceneInitializer {
         showSelectedGeneFilters();
       }
 
+      // Reset gene-2 v_max override so each new gene starts at 99th percentile.
+      // Gene-1's currentGeneValue is overwritten by updateGeneExpressionRange()
+      // inside updateGene(), so it doesn't need a manual reset.
+      if (ButtonState.value.currentGeneValue2 !== 0) {
+        updateCurrentGeneValue2(0);
+      }
+
       updateLoadingState(true);
 
       this.updateGene();
@@ -379,17 +387,22 @@ export class SceneInitializer {
       updateLoadingState(false);
     });
 
-    // Subscribe to changes in the gene expression slider value
+    // Subscribe to changes in gene 1's v_max (slider or red/green colorbar input)
     ButtonState.pipe(
       map((state) => state.currentGeneValue),
       distinctUntilChanged()
-    ).subscribe((currentGeneValue) => {
-      // Only update if we have genes selected and the slider value is valid
-      if (
-        SelectedState.value.selectedGenes.length > 0 &&
-        currentGeneValue > 0
-      ) {
-        console.log("Gene slider value changed to:", currentGeneValue);
+    ).subscribe(() => {
+      if (SelectedState.value.selectedGenes.length > 0) {
+        this.updateGene(true);
+      }
+    });
+
+    // Subscribe to changes in gene 2's v_max (magenta colorbar input)
+    ButtonState.pipe(
+      map((state) => state.currentGeneValue2),
+      distinctUntilChanged()
+    ).subscribe(() => {
+      if (SelectedState.value.selectedGenes.length >= 2) {
         this.updateGene(true);
       }
     });
@@ -452,6 +465,10 @@ export class SceneInitializer {
         if (genes.length == 2) {
           let count2 = await getGene(genes[1]);
           let nmax2 = calculateGenePercentile(count2, genePercentile);
+          // User-set v_max override for gene 2 (magenta colorbar input).
+          if (ButtonState.value.currentGeneValue2 > 0 && isGeneChanged) {
+            nmax2 = ButtonState.value.currentGeneValue2;
+          }
           ctsClipped2 = normalizeArray(count2, nmax2);
 
           // Make sure setLabelsMagenta is defined before calling it

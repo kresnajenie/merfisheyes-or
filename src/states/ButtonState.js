@@ -15,6 +15,9 @@ const buttonData = {
     currentMinGeneValue: 0,
     currentGeneValue: 0,
     currentMaxGeneValue: 0,
+
+    // Second-gene v_max override (dual-gene mode). 0 means "use 99th percentile default".
+    currentGeneValue2: 0,
     
     cameraPositionX: 80.65,
     cameraPositionY: -348.27,
@@ -107,6 +110,17 @@ export function updateCurrentGeneValue(value) {
 
     // Emit the updated state
     ButtonState.next(updatedState);
+}
+
+/**
+ * Updates the second-gene v_max override. 0 resets to 99th-percentile default.
+ */
+export function updateCurrentGeneValue2(value) {
+    const currentState = ButtonState.getValue();
+    ButtonState.next({
+        ...currentState,
+        currentGeneValue2: value,
+    });
 }
 
 export function updateCameraPositionZ(newCameraPositionZ) {

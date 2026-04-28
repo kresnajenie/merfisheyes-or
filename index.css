@@ -126,3 +126,31 @@ footer p {
     font-size: 14px;
     margin: 5px 0;
 }
+
+input.colorbar-vmax {
+    background: transparent;
+    border: 1px solid transparent;
+    color: white;
+    font: inherit;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    padding: 1px 0;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border-radius: 3px;
+    -moz-appearance: textfield;
+}
+input.colorbar-vmax:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+input.colorbar-vmax:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.08);
+}
+input.colorbar-vmax::-webkit-outer-spin-button,
+input.colorbar-vmax::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

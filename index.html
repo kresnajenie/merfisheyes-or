@@ -35,6 +35,7 @@
         import { loadPrefixOptions, selectPrefix } from "/src/helpers/Prefix.js";
         import { toggleCellFilter, toggleGeneFilter, toggleButton } from "/src/helpers/ToggleFilters.js"
         import { toggleMode } from "/src/helpers/Filtering/Gene.js"
+        import { bindColorbarInputs } from "/src/ui/ColorBar/ColorBar.js"
 
 
         $(function () {
@@ -46,13 +47,13 @@
 
         $(function () {
             $(".colorbar-wrapper").load("/src/ui/ColorBar/colorBar.html", () => {
-                // console.log("showing")
+                bindColorbarInputs()
             })
         });
 
         $(function () {
             $(".colorbar-wrapper2").load("/src/ui/ColorBar/colorBarGreen.html", () => {
-                // console.log("showing")
+                bindColorbarInputs()
             })
         });
 
@@ -60,7 +61,7 @@
 
         $(function () {
             $(".colorbar-wrapper3").load("/src/ui/ColorBar/colorBarMagenta.html", () => {
-                // console.log("showing")
+                bindColorbarInputs()
             })
         });
 
