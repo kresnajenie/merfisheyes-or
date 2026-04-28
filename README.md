@@ -4,8 +4,8 @@ This repository contains MERFISHEYES code tools for the research on the molecula
 
 **Title**: Molecular and Spatial Organization of the Primary Olfactory System and its Responses to Social Odors  
 **Authors**: Bogdan Bintu, Yoh Isogai, Ignatius Jenie, Xiaowei Zhuang, Catherine Dulac  
-**Journal**: bioRxiv (2025)  
-**DOI**: [10.1101/2025.05.02.651832](https://www.biorxiv.org/content/10.1101/2025.05.02.651832.full.pdf)
+**Journal**: Cell (2026)  
+**DOI**: [10.1016/j.cell.2026.03.053](https://www.cell.com/cell/fulltext/S0092-8674(26)00389-2)
 
 ## Project Overview
 
@@ -33,7 +33,7 @@ npm run dev
 If you use this code or data in your research, please cite:
 
 ```
-Bintu, B., Isogai, Y., Jenie, I., Zhuang, X., & Dulac, C. (2025).
+Bintu, B., Isogai, Y., Jenie, I., Zhuang, X., & Dulac, C. (2026).
 Molecular and Spatial Organization of the Primary Olfactory System and its Responses to Social Odors.
-bioRxiv, 2025.05.02.651832.
+Cell. https://www.cell.com/cell/fulltext/S0092-8674(26)00389-2
 ```
