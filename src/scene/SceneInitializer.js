@@ -71,6 +71,10 @@ export class SceneInitializer {
     this.tooltip = this.createTooltip();
     this.lastCameraPosition = new THREE.Vector3();
     this.lastHoverCheck = 0;
+    // Bumped at the start of each updateGene() call so stale invocations
+    // (still awaiting a getGene fetch) can detect they've been superseded
+    // and bail out instead of re-painting the UI with old data.
+    this.geneRequestId = 0;
     this.initScene();
     this.subscribeToStateChanges();
     this.setupEventListeners();
@@ -412,6 +416,9 @@ export class SceneInitializer {
   }
 
   async updateGene(isGeneChanged = false) {
+    const myRequestId = ++this.geneRequestId;
+    const isStale = () => this.geneRequestId !== myRequestId;
+
     const genes = SelectedState.value.selectedGenes;
     if (genes.length == 0) {
       this.updateCelltype([]);
@@ -431,6 +438,7 @@ export class SceneInitializer {
     if (genes.length > 0) {
       try {
         let count1 = await getGene(genes[0]);
+        if (isStale()) return;
         console.log("Gene count1", count1.length);
         console.log("Gene count1", count1);
 
@@ -464,6 +472,7 @@ export class SceneInitializer {
 
         if (genes.length == 2) {
           let count2 = await getGene(genes[1]);
+          if (isStale()) return;
           let nmax2 = calculateGenePercentile(count2, genePercentile);
           // User-set v_max override for gene 2 (magenta colorbar input).
           if (ButtonState.value.currentGeneValue2 > 0 && isGeneChanged) {
