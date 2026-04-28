@@ -33,7 +33,7 @@ npm run dev
 If you use this code or data in your research, please cite:
 
 ```
-Bintu, B., Isogai, Y., Zhuang, X., & Dulac, C. (2025).
+Bintu, B., Isogai, Y., Jenie, I., Zhuang, X., & Dulac, C. (2025).
 Molecular and Spatial Organization of the Primary Olfactory System and its Responses to Social Odors.
 bioRxiv, 2025.05.02.651832.
 ```
