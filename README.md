@@ -3,7 +3,7 @@
 This repository contains MERFISHEYES code tools for the research on the molecular and spatial organization of the mouse primary olfactory system, as described in:
 
 **Title**: Molecular and Spatial Organization of the Primary Olfactory System and its Responses to Social Odors  
-**Authors**: Bogdan Bintu, Yoh Isogai, Xiaowei Zhuang, Catherine Dulac  
+**Authors**: Bogdan Bintu, Yoh Isogai, Ignatius Jenie, Xiaowei Zhuang, Catherine Dulac  
 **Journal**: bioRxiv (2025)  
 **DOI**: [10.1101/2025.05.02.651832](https://www.biorxiv.org/content/10.1101/2025.05.02.651832.full.pdf)
 
