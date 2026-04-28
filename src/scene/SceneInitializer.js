@@ -51,6 +51,14 @@ import {
 const url = new URL(window.location);
 const params = new URLSearchParams(url.search);
 
+// Extra pixel slack on top of the rendered point's half-size when picking.
+const PIXEL_HOVER_BONUS = 2;
+// Representative per-point `size` attribute used to estimate hover radius.
+// Cells use 1 by default and 2 when their cluster is selected; 1.5 splits
+// the difference so both feel right.
+const REPRESENTATIVE_POINT_SIZE = 1.5;
+const HOVER_THROTTLE_MS = 10;
+
 export class SceneInitializer {
   constructor(container) {
     this.container = container;
@@ -61,6 +69,7 @@ export class SceneInitializer {
     this.hoveredPoint = null;
     this.tooltip = this.createTooltip();
     this.lastCameraPosition = new THREE.Vector3();
+    this.lastHoverCheck = 0;
     this.initScene();
     this.subscribeToStateChanges();
     this.setupEventListeners();
@@ -1063,9 +1072,14 @@ export class SceneInitializer {
     requestAnimationFrame(this.animate);
     this.controls.update(); // Only needed if controls.enableDamping is true
 
-    // Check for raycaster intersections if we have a mouse position
+    // Check for raycaster intersections if we have a mouse position.
+    // Throttle to avoid redundant raycasts on every frame.
     if (this.mouse.x !== 0 || this.mouse.y !== 0) {
-      this.checkIntersections();
+      const now = performance.now();
+      if (now - this.lastHoverCheck >= HOVER_THROTTLE_MS) {
+        this.lastHoverCheck = now;
+        this.checkIntersections();
+      }
     }
 
     // Log camera position and look-at direction every 5 seconds
@@ -1110,38 +1124,35 @@ export class SceneInitializer {
   };
 
   checkIntersections() {
-    // Get current camera position to check if we've moved
-    const currentCameraPosition = this.camera.position.clone();
-    // const cameraHasMoved = !currentCameraPosition.equals(this.lastCameraPosition);
-    this.lastCameraPosition.copy(currentCameraPosition);
+    this.lastCameraPosition.copy(this.camera.position);
 
-    // Calculate camera distance to determine raycaster parameters
-    const cameraDistance = this.camera.position.z;
+    // Convert one screen pixel into world units at the camera's current depth.
+    const target = this.controls && this.controls.target
+      ? this.controls.target
+      : new THREE.Vector3(0, 0, 0);
+    const cameraDistance = this.camera.position.distanceTo(target);
+    const canvasHeight = this.renderer.domElement.clientHeight;
+    const fovRad = (this.camera.fov / 2) * (Math.PI / 180);
+    const pixelSize = (2 * cameraDistance * Math.tan(fovRad)) / canvasHeight;
 
-    // Set more user-friendly thresholds for raycasting
-    // Higher values make it easier to select points but less precise
-    // Lower values require more precision but are more accurate
-    const minThreshold = 0.2; // When zoomed in very close
-    const maxThreshold = 2.0; // When zoomed out far
+    // Replicate the vertex shader's gl_PointSize formula in JS so the hover
+    // region tracks the rendered point size. The shader uses non-perspective
+    // adaptive sizing, so a static threshold can't match it across zoom levels.
+    const dotSize = ButtonState.value.dotSize;
+    const baseSize = REPRESENTATIVE_POINT_SIZE * dotSize * 0.4;
+    const distanceRatio = 150 / cameraDistance;
+    const t = Math.min(1, Math.max(0, (cameraDistance - 100) / 200));
+    const easedT = 1 - Math.pow(1 - t, 3);
+    const scaleFactor = 1 + easedT; // mix(1.0, 2.0, easedT)
+    const adaptiveSize = baseSize * distanceRatio * scaleFactor;
+    const minSize = Math.max(0.5, dotSize * 0.2);
+    const maxSize = Math.min(50, dotSize * 6);
+    const renderedPx = Math.min(maxSize, Math.max(minSize, adaptiveSize));
 
-    // Calculate adaptive threshold based on camera distance
-    // Use a non-linear curve to provide better usability across zoom levels
-    let threshold;
-    if (cameraDistance < 50) {
-      // Close range - easier selection but still somewhat precise
-      threshold = minThreshold;
-    } else if (cameraDistance > 500) {
-      // Far away - much larger threshold for easier selection
-      threshold = maxThreshold;
-    } else {
-      // Middle range - use a quadratic curve for smoother transition
-      // This gives more precision when closer and more leniency when farther
-      const t = (cameraDistance - 50) / (500 - 50); // Normalized distance (0-1)
-      threshold = minThreshold + t * t * (maxThreshold - minThreshold);
-    }
-
-    // Always update the threshold to ensure consistent behavior
-    this.raycaster.params.Points.threshold = threshold;
+    // Hover radius is half the rendered point + a small slack so the cursor
+    // anywhere visually on a point picks it.
+    const hoverPx = renderedPx / 2 + PIXEL_HOVER_BONUS;
+    this.raycaster.params.Points.threshold = pixelSize * hoverPx;
 
     // Update the raycaster with the current mouse position and camera
     this.raycaster.setFromCamera(this.mouse, this.camera);
