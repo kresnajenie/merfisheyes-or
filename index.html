@@ -107,17 +107,24 @@
 
     <footer>
         <p>
-            <!-- Data by <a href="https://www.linkedin.com/in/roy-maimon-640172211/" target="_blank">Maimon</a> et al. from  -->
-            Data by <a href="https://www.biorxiv.org/content/10.1101/2025.05.02.651832v1" target="_blank">Bintu</a> et al. from 
-            <a href="https://zhuang.harvard.edu" target="_blank">Zhuang</a> and <a href="https://www.dulaclab.com" target="_blank">Dulac</a> Lab. <br>
-            
-            &copy; 2024-2025, 
-            <a href="https://www.linkedin.com/in/ignatius-jenie-1023521b3/" target="_blank">Ignatius Jenie</a>
-            <a href="https://b.bintulab.com" target="_blank">Bintu Lab</a>. All Rights Reserved 
+            Data by
+            <a href="https://www.biorxiv.org/content/10.1101/2025.05.02.651832v1" target="_blank">Bintu</a>,
+            <a href="https://www.linkedin.com/in/yoh-isogai-47b56b58/" target="_blank">Isogai</a>,
+            <a href="https://www.linkedin.com/in/ignatius-jenie-1023521b3/" target="_blank">Jenie</a>,
+            <a href="https://zhuang.harvard.edu" target="_blank">Zhuang</a>, and
+            <a href="https://www.dulaclab.com" target="_blank">Dulac</a>. <br>
+
+            &copy; 2024-<span id="footer-year"></span>
+            <a href="https://merfisheyes.com" target="_blank">MERFISHEYES</a>,
+            <a href="https://b.bintulab.com" target="_blank">Bintu Lab</a>.
+            All Rights Reserved
             
 
         </p>
     </footer>
+    <script>
+        document.getElementById("footer-year").textContent = new Date().getFullYear();
+    </script>
 </body>
 
 </html>

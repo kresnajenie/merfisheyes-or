@@ -9,10 +9,6 @@ canvas {
     display: block;
 }
 
-nav {
-    background-color: #1b1b1b;
-}
-
 /* hides everything to prevent flickering */
 body * {
     visibility: hidden;
