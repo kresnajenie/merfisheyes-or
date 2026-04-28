@@ -1,15 +1,14 @@
 import { ApiState } from "../states/ApiState";
-import { fetchDataFromAPI } from "./APIClient";
+import { fetchColumn } from "./APIClient";
 import { reorderByIndexes } from "./LoadFunctions";
 
 export async function getGene(gene) {
-    if (ApiState.value.prefix == "moe") {
-        let data = await fetchDataFromAPI(gene, ApiState.value.prefix)
-        console.log("data", data)
-        console.log("reorder", ApiState.value.reorder)
+    const prefix = ApiState.value.prefix;
+    const data = await fetchColumn(prefix, gene);
+    if (prefix == "moe") {
         return reorderByIndexes(data, ApiState.value.reorder);
     }
-    return fetchDataFromAPI(gene, ApiState.value.prefix);
+    return data;
 }
 
 // for two genes
